@@ -10,12 +10,12 @@ export interface IUserService {
     // removeUser: () => void,
 }
 
-class UserService implements IUserService {
-    private tableName = 'HandleMyCaseDynamoTables-userProfiles870EDB81-VFZOMKP9623E';
+class UserService {
+    private static tableName = 'HandleMyCaseDynamoTables-userProfiles870EDB81-VFZOMKP9623E';
 
-    public getUser = async (id: string): Promise<User | undefined> => {
+    public static getUser = async (id: string): Promise<User | undefined> => {
       const result = await docClient.get({
-        TableName: this.tableName,
+        TableName: UserService.tableName,
         Key: {
           id: { S: id },
         },
@@ -28,10 +28,16 @@ class UserService implements IUserService {
       return result.Item as User | undefined;
     }
 
-    public getAllUsers = async (): Promise<User[]> => {
+    public static getAllUsers = async (): Promise<User[]> => {
       const result = await docClient.query({
-        TableName: this.tableName,
-        IndexName: 'id',
+        TableName: UserService.tableName,
+        KeyConditionExpression: "#id = :id",
+        ExpressionAttributeNames: {
+          '#id': 'id',
+        },
+        ExpressionAttributeValues: {
+          ':id': '1'
+        },
       }).promise();
 
       if (!result.Items?.length) {
@@ -41,10 +47,10 @@ class UserService implements IUserService {
       return result.Items as User[];
     };
 
-    public addUser = async (user: User): Promise<User> => {
+    public static addUser = async (user: User): Promise<User> => {
       const userId = uuidv4();
       const result = await docClient.put({
-        TableName: this.tableName,
+        TableName: UserService.tableName,
         Item: {
           id: { S: userId },
           accountId: { S: '1' },

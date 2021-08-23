@@ -5,7 +5,8 @@ import UserResolver from './resolvers/user';
 import { buildSchema } from 'type-graphql';
 import path from 'path';
 
-const docClient = new AWS.DynamoDB.DocumentClient();
+AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'worldwideandweb' });
+const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-1' });
 async function bootstrap() {
   
   const app = express();
