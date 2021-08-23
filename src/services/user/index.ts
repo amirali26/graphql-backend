@@ -5,12 +5,28 @@ import User from '../../models/User';
 export interface IUserService {
     addUser: (user: User) => Promise<User>,
     getAllUsers: () => Promise<User[]>,
+    getUser: (id: string) => Promise<User | undefined>,
     // updateUser: () => User,
     // removeUser: () => void,
 }
 
 class UserService implements IUserService {
     private tableName = 'HandleMyCaseDynamoTables-userProfiles870EDB81-VFZOMKP9623E';
+
+    public getUser = async (id: string): Promise<User | undefined> => {
+      const result = await docClient.get({
+        TableName: this.tableName,
+        Key: {
+          id: { S: id },
+        },
+      }).promise();
+
+      if (result.$response.error) {
+        throw Error(result.$response.error.message);
+      }
+
+      return result.Item as User | undefined;
+    }
 
     public getAllUsers = async (): Promise<User[]> => {
       const result = await docClient.query({

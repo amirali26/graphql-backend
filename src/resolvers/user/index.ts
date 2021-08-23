@@ -6,13 +6,15 @@ import { IUserService } from '../../services/user';
 
 @Resolver(User)
 class UserResolver {
-  constructor(private userService: IUserService) {}
+  constructor(private userService: IUserService) { }
 
-    @Query((returns) => User)
-  async user(@Arg('id') id: string, name: string) {
-    const user = await this.userService.getAllUsers({
-      id,
-      name,
-    });
+  @Query((returns) => User)
+  async getUser(@Arg('id') id: string, @Arg('name') name: string) {
+    const user = await this.userService.getUser();
+  }
+
+  async getAllUsers() {
+    const user = await this.userService.getAllUsers();
   }
 }
+w;
