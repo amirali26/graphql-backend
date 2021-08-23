@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 interface UserType {
-    id: string,
+    id?: string,
     name: string,
     accounts: string[],
 }
