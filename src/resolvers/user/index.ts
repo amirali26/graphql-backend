@@ -1,6 +1,5 @@
-import { Resolver } from 'dns';
-import { Query } from 'mongoose';
-import { Arg } from 'type-graphql';
+import 'reflect-metadata';
+import { Arg, Query, Resolver } from 'type-graphql';
 import User from '../../models/User';
 import { IUserService } from '../../services/user';
 
@@ -9,12 +8,15 @@ class UserResolver {
   constructor(private userService: IUserService) { }
 
   @Query((returns) => User)
-  async getUser(@Arg('id') id: string, @Arg('name') name: string) {
-    const user = await this.userService.getUser();
+  async getUser(@Arg('id') id: string) {
+    return await this.userService.getUser(id);
   }
 
+  @Query((returns) => User)
   async getAllUsers() {
-    const user = await this.userService.getAllUsers();
+    return await this.userService.getAllUsers();
   }
 }
-w;
+
+export default UserResolver;
+
