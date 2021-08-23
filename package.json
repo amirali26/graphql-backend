@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "co:login": "aws codeartifact login --tool npm --repository helpmycase --domain helpmycase --domain-owner 460234074473 --profile worldwideandweb",
     "dev": "nodemon --config nodemon.json src/index.ts",
     "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts"
   },
@@ -19,9 +20,12 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "class-validator": "^0.13.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.1",
-    "mongoose": "^5.13.7"
+    "mongoose": "^5.13.7",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
   }
 }
