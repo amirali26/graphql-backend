@@ -1,23 +1,13 @@
-import { v4 as uuidv4 } from 'uuid';
 import docClient from '../..';
-import User from '../../models/User';
-
-export interface IUserService {
-    addUser: (user: User) => Promise<User>,
-    getAllUsers: () => Promise<User[]>,
-    getUser: (id: string) => Promise<User | undefined>,
-    // updateUser: () => User,
-    // removeUser: () => void,
-}
-
+import { IUserEntity } from '../../entities/UserEntity';
 class UserService {
-    private static tableName = 'HandleMyCaseDynamoTables-userProfiles870EDB81-VFZOMKP9623E';
+  private static tableName = 'HandleMyCaseDynamoTables-userProfiles870EDB81-HQA8YQA5VUP3';
 
-    public static getUser = async (id: string): Promise<User | undefined> => {
+    public static getUser = async (id: string): Promise<IUserEntity | undefined> => {
       const result = await docClient.get({
         TableName: UserService.tableName,
         Key: {
-          id: { S: id },
+          'id': id,
         },
       }).promise();
 
@@ -25,10 +15,10 @@ class UserService {
         throw Error(result.$response.error.message);
       }
 
-      return result.Item as User | undefined;
+      return result.Item as IUserEntity | undefined;
     }
 
-    public static getAllUsers = async (): Promise<User[]> => {
+    public static getAllUsers = async (id: string): Promise<IUserEntity[]> => {
       const result = await docClient.query({
         TableName: UserService.tableName,
         KeyConditionExpression: "#id = :id",
@@ -36,7 +26,7 @@ class UserService {
           '#id': 'id',
         },
         ExpressionAttributeValues: {
-          ':id': '1'
+          ':id': id
         },
       }).promise();
 
@@ -44,29 +34,25 @@ class UserService {
         throw Error('There was an issue retrieving your users');
       }
 
-      return result.Items as User[];
+      return result.Items as IUserEntity[];
     };
 
-    public static addUser = async (user: User): Promise<User> => {
-      const userId = uuidv4();
-      const result = await docClient.put({
-        TableName: UserService.tableName,
-        Item: {
-          id: { S: userId },
-          accountId: { S: '1' },
-        },
-      }).promise();
+    // public static addUser = async (user: User): Promise<> => {
+    //   const userId = uuidv4();
+    //   const result = await docClient.put({
+    //     TableName: UserService.tableName,
+    //     Item: {
+    //       id: { S: userId },
+    //       accountId: { S: '1' },
+    //     },
+    //   }).promise();
 
-      if (result.$response.error) {
-        throw Error(result.$response.error.message);
-      }
+    //   if (result.$response.error) {
+    //     throw Error(result.$response.error.message);
+    //   }
 
-      return { ...user, id: userId };
-    };
-
-  // public updateUser = () => User;
-
-  // public removeUser = () => { };
+    //   return { ...user, id: userId };
+    // };
 }
 
 export default UserService;

@@ -3,13 +3,25 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Account {
+  id: ID!
+  name: String!
+  users: [User!]!
+}
+
 type Query {
-  getAllUsers: [User!]!
-  getUser(id: String!): User!
+  account(accountId: String!): Account!
+  user(userId: String!): User!
 }
 
 type User {
-  accounts: [String!]
+  accounts: [Account!]!
+  id: ID!
+  name: String!
+  permissions: [UserPermission!]!
+}
+
+type UserPermission {
   id: ID!
   name: String!
 }

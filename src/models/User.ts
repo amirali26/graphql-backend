@@ -1,23 +1,28 @@
-/* eslint-disable no-unused-vars */
-import 'reflect-metadata';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ID, ObjectType } from 'type-graphql';
+import Account from './Account';
+import UserPermission from './UserPermission';
 
-interface UserType {
+interface IUser {
     id?: string,
     name: string,
-    accounts: string[],
+    accounts: Account[],
+    permissions: UserPermission[],
 }
 
 @ObjectType()
-class User implements UserType {
-    @Field((type) => ID)
+class User implements IUser {
+    @Field((_type) => ID)
     id!: string;
 
-    @Field((type) => String)
+    @Field((_type) => String)
     name!: string;
 
-    @Field((type) => [String], { nullable: true })
-    accounts!: string[];
+    @Field((_type) => [Account])
+    accounts!: Account[];
+
+    @Field((_type) => [UserPermission])
+    permissions!: UserPermission[]
 }
 
 export default User;

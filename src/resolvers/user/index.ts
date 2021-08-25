@@ -1,19 +1,48 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import 'reflect-metadata';
-import { Arg, Query, Resolver } from 'type-graphql';
+import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { IAccountEntity } from '../../entities/AccountEntity';
 import User from '../../models/User';
-import UserService, { IUserService } from '../../services/user';
+import AccountService from '../../services/account';
+import UserService from '../../services/user';
+import UserAccountService from '../../services/user-accounts';
 
-@Resolver(User)
+@Resolver(of => User)
 class UserResolver {
+  @FieldResolver()
+  async accounts(@Root() user: User) {
+    try {
+      const accounts: IAccountEntity[] = [];
+      const results = await UserAccountService.getAllAccountsByUserId(user.id);
 
-  @Query((returns) => User)
-  async getUser(@Arg('id') id: string) {
-    return await UserService.getUser(id);
+      for(let i = 0; i <= results.length - 1; i++) {
+        const account = await AccountService.getAccount(results[i].accountId);
+        if (!account) throw Error(`Error finding account with id: ${results[i].accountId}`);
+
+        accounts.push(account);
+      }
+
+      console.log(accounts);
+      return accounts;
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
-  @Query((returns) => [User])
-  async getAllUsers() {
-    return await UserService.getAllUsers();
+  @FieldResolver()
+  async permissions(@Root() user: User) {
+    try {
+      const permissions = [];
+      const results = await 
+    } catch(e) {
+      console.log(e.message);
+    }
+  }
+
+  @Query((returns) => User)
+  async user(@Arg('userId') userId: string) {
+    return await UserService.getUser(userId);
   }
 }
 
