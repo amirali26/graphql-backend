@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import 'reflect-metadata';
-import { Arg, FieldResolver, InputType, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Ctx, FieldResolver, InputType, Query, Resolver, Root } from 'type-graphql';
 import { IAccountEntity } from '../../entities/AccountEntity';
 import User from '../../models/User';
 import AccountService from '../../services/account';
@@ -50,7 +50,8 @@ class UserResolver {
   }
 
   @Query((returns) => User)
-  async user(@Arg('userId') userId: string) {
+  async user(@Arg('userId') userId: string, @Ctx() ctx: unknown) {
+    console.log(ctx);
     return await UserService.getUser(userId);
   }
 }
