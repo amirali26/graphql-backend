@@ -5,6 +5,7 @@ import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import Account from '../../models/Account';
 import User from '../../models/User';
 import AccountService from '../../services/account';
+import AccountPermissionService from '../../services/account-permissions';
 import UserService from '../../services/user';
 import UserAccountService from '../../services/user-accounts';
 
@@ -23,6 +24,27 @@ class AccountResolver {
             
             return users;
         } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    @FieldResolver()
+    async permissions(@Root() account: Account) {
+        try {
+            const permissions = [];
+
+            const accountEntity = await AccountService.getAccount(account.id);
+            if (!accountEntity) throw Error(`No account found with the id: ${account.id}`);
+
+            for(let i = 0; i <= accountEntity.permissions.length - 1; i++) {
+                const permission = await AccountPermissionService.getAccountPermissionsById(accountEntity.permissions[i]);
+                if (!permission) throw Error(`Unable to find permission with id: ${accountEntity.permissions[i]}`);
+
+                permissions.push(permission);
+            }
+
+            return permissions;
+        } catch(e) {
             console.log(e.message);
         }
     }

@@ -6,7 +6,13 @@
 type Account {
   id: ID!
   name: String!
+  permissions: [AccountPermission!]!
   users: [User!]!
+}
+
+type AccountPermission {
+  id: ID!
+  name: String!
 }
 
 type Query {

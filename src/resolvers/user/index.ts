@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import 'reflect-metadata';
-import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { Arg, FieldResolver, InputType, Query, Resolver, Root } from 'type-graphql';
 import { IAccountEntity } from '../../entities/AccountEntity';
 import User from '../../models/User';
 import AccountService from '../../services/account';
@@ -24,7 +24,6 @@ class UserResolver {
         accounts.push(account);
       }
 
-      console.log(accounts);
       return accounts;
     } catch (e) {
       console.log(e.message);
@@ -44,7 +43,6 @@ class UserResolver {
         permissions.push(permission);
       }
 
-      console.log(permissions);
       return permissions;
     } catch(e) {
       console.log(e.message);
@@ -55,6 +53,9 @@ class UserResolver {
   async user(@Arg('userId') userId: string) {
     return await UserService.getUser(userId);
   }
+
+  @InputType()
+  
 }
 
 export default UserResolver;
