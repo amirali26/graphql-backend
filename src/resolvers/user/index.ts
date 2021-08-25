@@ -7,6 +7,7 @@ import User from '../../models/User';
 import AccountService from '../../services/account';
 import UserService from '../../services/user';
 import UserAccountService from '../../services/user-accounts';
+import UserPermissionsService from '../../services/user-permissions';
 
 @Resolver(of => User)
 class UserResolver {
@@ -34,7 +35,17 @@ class UserResolver {
   async permissions(@Root() user: User) {
     try {
       const permissions = [];
-      const results = await 
+
+      const userEntity = await UserService.getUser(user.id);
+      if (!userEntity) throw Error(`Cannot find user with the id: ${user.id}`);
+
+      for(let i = 0; i <= userEntity.permissions.length - 1; i++) {
+        const permission = UserPermissionsService.getPermissionById(userEntity.permissions[i]);
+        permissions.push(permission);
+      }
+
+      console.log(permissions);
+      return permissions;
     } catch(e) {
       console.log(e.message);
     }
