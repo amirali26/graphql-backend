@@ -53,9 +53,6 @@ class UserResolver {
   async user(@Arg('userId') userId: string) {
     return await UserService.getUser(userId);
   }
-
-  @InputType()
-  
 }
 
 export default UserResolver;
