@@ -15,6 +15,21 @@ type AccountPermission {
   name: String!
 }
 
+input AddAccountInput {
+  name: ID!
+  permissionIds: [String!]
+  usersIds: [String!]
+}
+
+input AddAccountPermissionInput {
+  name: String!
+}
+
+type Mutation {
+  addAccount(account: AddAccountInput!): Account!
+  addAccountPermissions(accountPermission: AddAccountPermissionInput!): AccountPermission!
+}
+
 type Query {
   account(accountId: String!): Account!
   user(userId: String!): User!

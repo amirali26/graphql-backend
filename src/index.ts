@@ -5,6 +5,7 @@ import path from 'path';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import AccountResolver from './resolvers/account';
+import AccountPermissionResolver from './resolvers/account-permission';
 import UserResolver from './resolvers/user';
 
 AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'worldwideandweb' });
@@ -14,7 +15,7 @@ async function bootstrap() {
   const app = express();
   
   const schema = await buildSchema({
-    resolvers: [UserResolver, AccountResolver],
+    resolvers: [UserResolver, AccountResolver, AccountPermissionResolver],
     // automatically create `schema.gql` file with schema definition in current folder
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
   });

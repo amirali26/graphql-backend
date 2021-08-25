@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import 'reflect-metadata';
-import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Args, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import AddAccountInput from '../../inputs/account';
 import Account from '../../models/Account';
-import User from '../../models/User';
 import AccountService from '../../services/account';
 import AccountPermissionService from '../../services/account-permissions';
 import UserService from '../../services/user';
@@ -55,6 +55,21 @@ class AccountResolver {
             return await AccountService.getAccount(accountId);
         } catch (e) {
             console.log(e.message);
+        }
+    }
+
+    @Mutation((returns) => Account)
+    async addAccount(@Arg('account') newAccount: AddAccountInput) {
+        try {
+            const result = await AccountService.addAccount(newAccount.name, newAccount.permissionIds);
+
+            return {
+                id: result.id,
+                name: result.name,
+            };
+        } catch(e) {
+            console.log(e.message);
+            throw Error('hi');
         }
     }
 }

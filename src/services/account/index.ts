@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import docClient from '../..';
 import { IAccountEntity } from '../../entities/AccountEntity';
 
@@ -17,6 +18,26 @@ class AccountService {
         }
 
         return result.Item as IAccountEntity | undefined;
+    }
+
+    public static addAccount = async (accountName: string, permissions: string[]): Promise<IAccountEntity> => {
+        const id = v4();
+        const result = await docClient.put({
+            TableName: AccountService.tableName,
+            Item: {
+                'id': id,
+                'name': accountName,
+                'permissions': permissions,
+            }
+        }).promise();
+
+        if (result.$response.error) throw Error(result.$response.error.message);
+
+        return {
+            id: id,
+            name: accountName,
+            permissions: permissions,
+        }
     }
 }
 
