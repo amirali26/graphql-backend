@@ -1,0 +1,3 @@
+class UserAccountResolver {
+    @Mutastion(() => )
+}
