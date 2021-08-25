@@ -25,9 +25,15 @@ input AddAccountPermissionInput {
   name: String!
 }
 
+input AddUserAccountInput {
+  accountId: String!
+  userId: String!
+}
+
 type Mutation {
   addAccount(account: AddAccountInput!): Account!
   addAccountPermissions(accountPermission: AddAccountPermissionInput!): AccountPermission!
+  addUserAccount(userAccountInput: AddUserAccountInput!): UserAccount!
 }
 
 type Query {
@@ -40,6 +46,11 @@ type User {
   id: ID!
   name: String!
   permissions: [UserPermission!]!
+}
+
+type UserAccount {
+  accountId: String!
+  userId: String!
 }
 
 type UserPermission {

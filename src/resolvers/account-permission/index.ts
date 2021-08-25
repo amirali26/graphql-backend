@@ -3,7 +3,7 @@ import AddAccountPermissionInput from "../../inputs/account-permissions";
 import AccountPermission from "../../models/AccountPermission";
 import AccountPermissionService from "../../services/account-permissions";
 
-@Resolver(of => AccountPermission)
+@Resolver(() => AccountPermission)
 class AccountPermissionResolver {
     @Mutation(() => AccountPermission)
     async addAccountPermissions(@Arg('accountPermission') newAccountPermission: AddAccountPermissionInput): Promise<AccountPermission> {
