@@ -26,7 +26,7 @@ async function bootstrap() {
   }));
   
   app.listen(8080);
-}  
+}
 
 bootstrap();
 
