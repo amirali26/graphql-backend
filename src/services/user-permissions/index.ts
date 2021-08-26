@@ -15,7 +15,7 @@ class UserPermissionsService {
         if (response.$response.error) throw Error(response.$response.error.message);
 
         return response.Item as IUserPermissionsEntity;
-    } 
+    }
 }
 
 export default UserPermissionsService;
