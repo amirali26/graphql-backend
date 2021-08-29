@@ -8,7 +8,6 @@ import path from 'path';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import customAuthChecker from './auth/customAuthChecker';
-import { IContext } from './models/Context';
 import AccountResolver from './resolvers/account';
 import AccountPermissionResolver from './resolvers/account-permission';
 import UserResolver from './resolvers/user';
@@ -21,7 +20,7 @@ const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-1' });
 
 const cognitoExpress = new CognitoExpress({
   region: "eu-west-1",
-  cognitoUserPoolId: "eu-west-1_Bo5l53wSG",
+  cognitoUserPoolId: "eu-west-1_9kq0cNnpi",
   tokenUse: "access", //Possible Values: access | id
   tokenExpiration: 3600000 //Up to default expiration of 1 hour (3600000 ms)
 });
