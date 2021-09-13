@@ -8,10 +8,10 @@ class AddAccountInput implements Partial<Account> {
     name!: string;
 
     @Field(() => [String], { nullable: true })
-    usersIds!: string[];
+    usersIds?: string[];
 
     @Field(() => [String], { nullable: true })
-    permissionIds!: string[];
+    permissionIds?: string[];
 }
 
 export default AddAccountInput;

@@ -6,6 +6,7 @@ import User from './User';
 export interface IAccount {
     id?: string,
     name: string,
+    createdBy: User,
     users: User[],
     permissions: AccountPermission[],
 }
@@ -20,9 +21,15 @@ class Account implements IAccount {
 
     @Field((_type) => [User])
     users!: User[];
-
+    
     @Field((_type) => [AccountPermission])
     permissions!: AccountPermission[];
+
+    @Field((_type) => User)
+    createdBy!: User;
+
+    @Field((_type) => String)
+    createdDate!: string;
 }
 
 export default Account;

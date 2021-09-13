@@ -4,6 +4,8 @@
 # -----------------------------------------------
 
 type Account {
+  createdBy: User!
+  createdDate: String!
   id: ID!
   name: String!
   permissions: [AccountPermission!]!

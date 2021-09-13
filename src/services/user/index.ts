@@ -36,23 +36,6 @@ class UserService {
 
       return result.Items as IUserEntity[];
     };
-
-    // public static addUser = async (user: User): Promise<> => {
-    //   const userId = uuidv4();
-    //   const result = await docClient.put({
-    //     TableName: UserService.tableName,
-    //     Item: {
-    //       id: { S: userId },
-    //       accountId: { S: '1' },
-    //     },
-    //   }).promise();
-
-    //   if (result.$response.error) {
-    //     throw Error(result.$response.error.message);
-    //   }
-
-    //   return { ...user, id: userId };
-    // };
 }
 
 export default UserService;
