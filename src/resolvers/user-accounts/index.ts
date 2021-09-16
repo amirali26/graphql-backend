@@ -6,12 +6,10 @@ import UserAccountService from "../../services/user-accounts";
 @Resolver(() => UserAccountResolver)
 class UserAccountResolver {
     @Mutation(() => UserAccount)
-    async addUserAccount(@Arg('userAccountInput') newUserAccountInput: AddUserAccountInput): Promise<UserAccount> {
+    async addUserAccount(@Arg('userAccountInput') newUserAccountInput: AddUserAccountInput) {
         try {
             return await UserAccountService.addNewUserAccount(newUserAccountInput.userId, newUserAccountInput.accountId);
         } catch (e) {
-            console.log(e.message);
-            throw Error(e.message);
         }
     }
 }

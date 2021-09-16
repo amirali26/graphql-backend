@@ -24,17 +24,12 @@ class AccountResolver {
 
             return users;
         } catch (e) {
-            console.log(e.message);
         }
     }
 
     @FieldResolver()
     async createdBy(@Root() account: Account, @Ctx() ctx: any) {
-        try {
-            return await UserService.getUser(ctx.subId);
-        } catch (e) {
-            console.log(e.message);
-        }
+        return await UserService.getUser(ctx.subId);
     }
 
     @FieldResolver()
@@ -54,7 +49,6 @@ class AccountResolver {
 
             return permissions;
         } catch (e) {
-            console.log(e.message);
         }
     }
 
@@ -63,7 +57,6 @@ class AccountResolver {
         try {
             return await AccountService.getAccount(accountId);
         } catch (e) {
-            console.log(e.message);
         }
     }
 
@@ -87,8 +80,6 @@ class AccountResolver {
                 createdDate: result.createdDate
             };
         } catch (e) {
-            console.log(e.message);
-            throw Error(e.message);
         }
     }
 }

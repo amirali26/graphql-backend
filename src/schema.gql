@@ -36,11 +36,31 @@ type Mutation {
   addAccount(account: AddAccountInput!): Account!
   addAccountPermissions(accountPermission: AddAccountPermissionInput!): AccountPermission!
   addUserAccount(userAccountInput: AddUserAccountInput!): UserAccount!
+  newRequestSubmission(requestSubmission: RequestSubmissionInput!): RequestSubmission!
 }
 
 type Query {
   account(accountId: String!): Account!
   user(userId: String!): User!
+}
+
+type RequestSubmission {
+  case: String!
+  email: String!
+  id: ID!
+  name: String!
+  phoneNumber: String!
+}
+
+input RequestSubmissionInput {
+  case: String!
+  email: String!
+  name: String!
+  phoneNumber: String!
+}
+
+type Subscription {
+  newNotification: RequestSubmission!
 }
 
 type User {

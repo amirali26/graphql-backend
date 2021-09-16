@@ -6,7 +6,7 @@ import AccountPermissionService from "../../services/account-permissions";
 @Resolver(() => AccountPermission)
 class AccountPermissionResolver {
     @Mutation(() => AccountPermission)
-    async addAccountPermissions(@Arg('accountPermission') newAccountPermission: AddAccountPermissionInput): Promise<AccountPermission> {
+    async addAccountPermissions(@Arg('accountPermission') newAccountPermission: AddAccountPermissionInput) {
         try {
             const response = await AccountPermissionService.addAccountPermission(newAccountPermission.name);
         
@@ -15,8 +15,6 @@ class AccountPermissionResolver {
                 name: response.name,
             }
         } catch(e) {
-            console.log(e.message);
-            throw Error(e.message);
         }
     }
 }

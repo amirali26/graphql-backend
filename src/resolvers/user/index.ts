@@ -26,7 +26,6 @@ class UserResolver {
 
       return accounts;
     } catch (e) {
-      console.log(e.message);
     }
   }
 
@@ -45,7 +44,6 @@ class UserResolver {
 
       return permissions;
     } catch(e) {
-      console.log(e.message);
     }
   }
 
