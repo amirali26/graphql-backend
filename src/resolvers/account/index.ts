@@ -23,7 +23,8 @@ class AccountResolver {
             }
 
             return users;
-        } catch (e) {
+        } catch (e: any) {
+            throw Error(e.message);
         }
     }
 
@@ -38,7 +39,6 @@ class AccountResolver {
             const permissions = [];
 
             const accountEntity = await AccountService.getAccount(account.id);
-            if (!accountEntity) throw Error(`No account found with the id: ${account.id}`);
 
             for (let i = 0; i <= accountEntity.permissions.length - 1; i++) {
                 const permission = await AccountPermissionService.getAccountPermissionsById(accountEntity.permissions[i]);
@@ -48,7 +48,8 @@ class AccountResolver {
             }
 
             return permissions;
-        } catch (e) {
+        } catch (e: any) {
+            throw Error(e.message);
         }
     }
 
@@ -56,7 +57,8 @@ class AccountResolver {
     async account(@Arg('accountId') accountId: string) {
         try {
             return await AccountService.getAccount(accountId);
-        } catch (e) {
+        } catch (e: any) {
+            throw e.message;
         }
     }
 
@@ -79,7 +81,8 @@ class AccountResolver {
                 name: result.name,
                 createdDate: result.createdDate
             };
-        } catch (e) {
+        } catch (e: any) {
+            throw Error(e.message);
         }
     }
 }

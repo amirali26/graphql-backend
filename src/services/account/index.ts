@@ -5,19 +5,24 @@ import { IAccountEntity } from '../../entities/AccountEntity';
 class AccountService {
     private static tableName = 'HandleMyCaseDynamoTables-accountProfiles2754FC86-2H5HKEKJPP7H';
 
-    public static getAccount = async (id: string): Promise<IAccountEntity | undefined> => {
-        const result = await docClient.get({
+    public static getAccount = async (id: string): Promise<IAccountEntity> => {
+        const result = await docClient.query({
             TableName: AccountService.tableName,
-            Key: {
-                'id': id
-            },
+            KeyConditionExpression: 'id = :id',
+            ExpressionAttributeValues: {
+                ':id': id,
+            }
         }).promise();
 
         if (result.$response.error) {
             throw Error(result.$response.error.message);
         }
 
-        return result.Item as IAccountEntity | undefined;
+        if (!result.Items?.length) {
+            throw Error(`No account found with the id: ${id}`);
+        }
+
+        return result.Items[0] as IAccountEntity;
     }
 
     public static addAccount = async (accountName: string, userId: string, permissions: string[]): Promise<IAccountEntity> => {

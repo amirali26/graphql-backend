@@ -59,10 +59,6 @@ input RequestSubmissionInput {
   phoneNumber: String!
 }
 
-type Subscription {
-  newNotification: RequestSubmission!
-}
-
 type User {
   accounts: [Account!]!
   id: ID!

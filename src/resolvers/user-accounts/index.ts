@@ -7,10 +7,7 @@ import UserAccountService from "../../services/user-accounts";
 class UserAccountResolver {
     @Mutation(() => UserAccount)
     async addUserAccount(@Arg('userAccountInput') newUserAccountInput: AddUserAccountInput) {
-        try {
-            return await UserAccountService.addNewUserAccount(newUserAccountInput.userId, newUserAccountInput.accountId);
-        } catch (e) {
-        }
+        return await UserAccountService.addNewUserAccount(newUserAccountInput.userId, newUserAccountInput.accountId);
     }
 }
 

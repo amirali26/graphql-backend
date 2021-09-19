@@ -16,4 +16,10 @@ class RequestSubmissionInput implements Partial<RequestSubmission> {
     case!: string;
 }
 
+@InputType()
+export class NewRequestInput {
+    @Field(_type => [String])
+    id!: string[];
+}
+
 export default RequestSubmissionInput;

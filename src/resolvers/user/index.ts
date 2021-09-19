@@ -35,7 +35,6 @@ class UserResolver {
       const permissions = [];
 
       const userEntity = await UserService.getUser(user.id);
-      if (!userEntity) throw Error(`Cannot find user with the id: ${user.id}`);
 
       for(let i = 0; i <= userEntity.permissions.length - 1; i++) {
         const permission = UserPermissionsService.getPermissionById(userEntity.permissions[i]);

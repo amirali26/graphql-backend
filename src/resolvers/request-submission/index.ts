@@ -1,27 +1,23 @@
-import { Arg, Mutation, PubSub, PubSubEngine, Resolver, Root, Subscription } from "type-graphql";
-import { IRequestSubmissionEntity } from "../../entities/RequestSubmissionEntity";
-import RequestSubmissionInput from "../../inputs/request-submission";
+import { Arg, Mutation, PubSub, PubSubEngine, Query, Resolver, Root, Subscription } from "type-graphql";
+import RequestSubmissionInput, { NewRequestInput } from "../../inputs/request-submission";
 import RequestSubmission from "../../models/RequestSubmission";
 import RequestSubmissionService from "../../services/request-submission";
 
 @Resolver()
 class RequestSubmissionResolver {
-    @Subscription({ topics: 'NOTIFICATIONS' })
-    newNotification(@Root() payload: IRequestSubmissionEntity): RequestSubmission {
-        return payload;
-    }
 
     @Mutation(() => RequestSubmission)
-    async newRequestSubmission(@Arg('requestSubmission') newRequestSubmission: RequestSubmissionInput,
-        @PubSub() pubsub: PubSubEngine): Promise<RequestSubmission> {
+    async newRequestSubmission(@Arg('requestSubmission') newRequestSubmission: RequestSubmissionInput): Promise<RequestSubmission> {
         const result = await RequestSubmissionService.addNewRequestSubmission({
             ...newRequestSubmission
         });
-
-        await pubsub.publish('NOTIFICATIONS', result)
-
         return result;
     }
+
+    // @Query(() => [RequestSubmission])
+    // async requestSubmissions() {
+    //     const result = await RequestSubmissionService.getAllRequests();
+    // }
 }
 
 export default RequestSubmissionResolver;

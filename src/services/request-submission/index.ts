@@ -30,6 +30,10 @@ class RequestSubmissionService {
             createdDate
         }
     }
+
+    // public static async getAllRequests(): Promise<IRequestSubmissionEntity[]> {
+        
+    // }
 }
 
 export default RequestSubmissionService;
