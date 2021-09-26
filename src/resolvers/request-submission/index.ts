@@ -14,10 +14,10 @@ class RequestSubmissionResolver {
         return result;
     }
 
-    // @Query(() => [RequestSubmission])
-    // async requestSubmissions() {
-    //     const result = await RequestSubmissionService.getAllRequests();
-    // }
+    @Query(() => [RequestSubmission])
+    async requestSubmissions(): Promise<RequestSubmission[]> {
+        return await RequestSubmissionService.getAllRequests();
+    }
 }
 
 export default RequestSubmissionResolver;

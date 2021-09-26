@@ -15,6 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/luxon": "^2.0.4",
     "@types/node": "^16.4.13",
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
@@ -39,6 +40,7 @@
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.3",
+    "luxon": "^2.0.2",
     "reflect-metadata": "^0.1.13",
     "subscriptions-transport-ws": "^0.9.19",
     "type-graphql": "^1.1.1",

@@ -41,15 +41,25 @@ type Mutation {
 
 type Query {
   account(accountId: String!): Account!
+  requestSubmissions: [RequestSubmission!]!
   user(userId: String!): User!
+}
+
+"""Status of the request"""
+enum RequestStatus {
+  CLOSED
+  HANDLED
+  OPEN
 }
 
 type RequestSubmission {
   case: String!
+  createdDate: String!
   email: String!
   id: ID!
   name: String!
   phoneNumber: String!
+  status: RequestStatus!
 }
 
 input RequestSubmissionInput {
