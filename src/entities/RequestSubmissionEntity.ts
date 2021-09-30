@@ -1,4 +1,4 @@
-import RequestStatus from "../models/RequestStatus";
+import RequestStatus from "../enums/RequestStatus";
 
 export interface IRequestSubmissionEntity {
     id: string,

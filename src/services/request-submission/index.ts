@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import docClient from '../..';
 import { IRequestSubmissionEntity } from "../../entities/RequestSubmissionEntity";
-import RequestStatus from '../../models/RequestStatus';
+import RequestStatus from '../../enums/RequestStatus';
 import { DateTime } from 'luxon';
 
 class RequestSubmissionService {

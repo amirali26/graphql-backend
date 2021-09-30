@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ID, ObjectType } from "type-graphql";
-import RequestStatus from "./RequestStatus";
+import RequestStatus from "../enums/RequestStatus";
 
 
 interface IRequestSubmission {
