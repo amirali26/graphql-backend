@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import AWS from 'aws-sdk';
-import express, { response } from 'express';
+import express from 'express';
 import { execute, subscribe } from 'graphql';
 import { createServer } from 'http';
 import path from 'path';
