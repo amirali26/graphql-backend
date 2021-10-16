@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "co:login": "aws codeartifact login --tool npm --repository helpmycase --domain helpmycase --domain-owner 460234074473",
     "dev": "nodemon --config nodemon.json src/index.ts",
-    "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts"
+    "dev:debug": "nodemon --config nodemon.json --inspect-brk src/index.ts",
+    "build": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",

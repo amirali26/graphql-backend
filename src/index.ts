@@ -21,7 +21,8 @@ const CognitoExpress = require('cognito-express');
 const cors = require('cors');
 
 
-AWS.config.credentials = new AWS.SharedIniFileCredentials();
+// AWS.config.credentials = new AWS.SharedIniFileCredentials();
+AWS.config.credentials = new AWS.ECSCredentials();
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-1' });
 
 const cognitoExpress = new CognitoExpress({
