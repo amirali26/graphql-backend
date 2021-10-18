@@ -6,6 +6,7 @@ import AddAccountInput from '../../inputs/account';
 import Account from '../../models/Account';
 import AccountService from '../../services/account';
 import AccountPermissionService from '../../services/account-permissions';
+import AreasOfPracticeService from '../../services/areas-of-practice';
 import UserService from '../../services/user';
 import UserAccountService from '../../services/user-accounts';
 
@@ -65,11 +66,16 @@ class AccountResolver {
     @Mutation((returns) => Account)
     async addAccount(@Arg('account') newAccount: AddAccountInput, @Ctx() ctx: any) {
         try {
+            console.log(newAccount);
             const result = await AccountService.addAccount(
-                newAccount.name, ctx.subId, newAccount.permissionIds || []
+                newAccount.name,
+                ctx.subId, newAccount.permissionIds || [],
+                newAccount.receiveEmails,
+                newAccount.areasOfPractices
             );
 
             UserAccountService.addNewUserAccount(ctx.subId, result.id);
+            Promise.all(newAccount.areasOfPractices.map((id) => AreasOfPracticeService.getArea(id)));
             if (newAccount.usersIds?.length) {
                 Promise.all(newAccount.usersIds.map((uid) => UserAccountService.addNewUserAccount(uid, result.id)));
             }

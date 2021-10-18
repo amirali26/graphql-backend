@@ -7,6 +7,12 @@ class AddAccountInput implements Partial<Account> {
     @Field(() => ID)
     name!: string;
 
+    @Field(() => [String])
+    areasOfPractices!: string[];
+
+    @Field(() => Boolean)
+    receiveEmails!: boolean;
+
     @Field(() => [String], { nullable: true })
     usersIds?: string[];
 

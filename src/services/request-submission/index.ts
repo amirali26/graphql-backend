@@ -22,7 +22,7 @@ class RequestSubmissionService {
                 'case': newRequestSubmission.case,
                 'status': RequestStatus.OPEN,
                 'createdDate': createdDate,
-                'createdate#topic#accountId#userId': `${createdDate}#${newRequestSubmission.case}#undefined#undefined`
+                'createdate#topic#accountId#userId': `${createdDate}#${newRequestSubmission.topic}#undefined#undefined`
             }
         }).promise();
 

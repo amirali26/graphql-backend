@@ -10,6 +10,7 @@ interface IRequestSubmission {
     email: string,
     status: RequestStatus,
     case: string,
+    topic: string,
     createdDate: string,
 }
 
@@ -33,6 +34,9 @@ class RequestSubmission implements IRequestSubmission {
 
     @Field(_type => String)
     case!: string;
+
+    @Field(_type => String)
+    topic!: string;
 
     @Field(_type => String)
     createdDate!: string;

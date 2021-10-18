@@ -25,7 +25,12 @@ class AccountService {
         return result.Items[0] as IAccountEntity;
     }
 
-    public static addAccount = async (accountName: string, userId: string, permissions: string[]): Promise<IAccountEntity> => {
+    public static addAccount = async (accountName: string,
+        userId: string,
+        permissions: string[],
+        receiveEmails: boolean,
+        areasOfPractices: string[]
+    ): Promise<IAccountEntity> => {
         const id = v4();
         const createdDate = Date.now().toString();
         const result = await docClient.put({
@@ -34,6 +39,8 @@ class AccountService {
                 'id': id,
                 'name': accountName,
                 'permissions': permissions,
+                'receiveEmails': receiveEmails,
+                'areasOfPractices': areasOfPractices,
                 'createdDate': createdDate,
                 'createdBy': userId,
             }

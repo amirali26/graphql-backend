@@ -4,6 +4,7 @@
 # -----------------------------------------------
 
 type Account {
+  areasOfPractice: [AreasOfPractice!]!
   createdBy: User!
   createdDate: String!
   id: ID!
@@ -18,8 +19,10 @@ type AccountPermission {
 }
 
 input AddAccountInput {
+  areasOfPractices: [String!]!
   name: ID!
   permissionIds: [String!]
+  receiveEmails: Boolean!
   usersIds: [String!]
 }
 
@@ -32,15 +35,20 @@ input AddUserAccountInput {
   userId: String!
 }
 
+type AreasOfPractice {
+  id: ID!
+  name: String!
+}
+
 type Mutation {
   addAccount(account: AddAccountInput!): Account!
   addAccountPermissions(accountPermission: AddAccountPermissionInput!): AccountPermission!
   addUserAccount(userAccountInput: AddUserAccountInput!): UserAccount!
-  newRequestSubmission(requestSubmission: RequestSubmissionInput!): RequestSubmission!
 }
 
 type Query {
   account(accountId: String!): Account!
+  areasOfLegalPractices: [AreasOfPractice!]!
   requestSubmissions: [RequestSubmission!]!
   user(userId: String!): User!
 }
@@ -60,20 +68,17 @@ type RequestSubmission {
   name: String!
   phoneNumber: String!
   status: RequestStatus!
-}
-
-input RequestSubmissionInput {
-  case: String!
-  email: String!
-  name: String!
-  phoneNumber: String!
+  topic: String!
 }
 
 type User {
   accounts: [Account!]!
+  birthDate: String!
+  email: String!
   id: ID!
   name: String!
   permissions: [UserPermission!]!
+  phoneNumber: String!
 }
 
 type UserAccount {

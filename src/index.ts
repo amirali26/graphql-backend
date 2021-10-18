@@ -10,6 +10,7 @@ import { buildSchema } from 'type-graphql';
 import customAuthChecker from './auth/customAuthChecker';
 import AccountResolver from './resolvers/account';
 import AccountPermissionResolver from './resolvers/account-permission';
+import AreasOfPracticeResolver from './resolvers/areas-of-practice';
 import RequestSubmissionResolver from './resolvers/request-submission';
 import UserResolver from './resolvers/user';
 import UserAccountResolver from './resolvers/user-accounts';
@@ -21,8 +22,8 @@ const CognitoExpress = require('cognito-express');
 const cors = require('cors');
 
 
-// AWS.config.credentials = new AWS.SharedIniFileCredentials();
-AWS.config.credentials = new AWS.ECSCredentials();
+AWS.config.credentials = new AWS.SharedIniFileCredentials();
+// AWS.config.credentials = new AWS.ECSCredentials();
 const docClient = new AWS.DynamoDB.DocumentClient({ region: 'eu-west-1' });
 
 const cognitoExpress = new CognitoExpress({
@@ -43,6 +44,7 @@ async function bootstrap() {
       AccountResolver,
       AccountPermissionResolver,
       RequestSubmissionResolver,
+      AreasOfPracticeResolver,
     ],
     // automatically create `schema.gql` file with schema definition in current folder
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
@@ -53,8 +55,8 @@ async function bootstrap() {
 
   app.use((req, res, next) => {
     const accountId = req.headers.accountid;
-    const accessToken = req.headers.authorization;
-    // const accessToken = 'eyJraWQiOiJWREI1STJ3VExKaklcL2N6T2FmUmp4M1wvbXVYYTl1UFJZNDZySEVzOENBZ3M9IiwiYWxnIjoiUlMyNTYifQ.eyJvcmlnaW5fanRpIjoiODdkZWVkMjctY2FhNS00OTA2LWI4MmItMjY4OTQyMzMyNzA3Iiwic3ViIjoiOWVjZTkzMTEtMDU1OC00M2E1LWI0NGEtNjNjMTA5NzQ2OTcwIiwiZXZlbnRfaWQiOiI3MDBiNjU0OS03YmZkLTQ1ZjktOTljYy01YzU4ZDk0OWEzNTEiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjMxNzg3MTc0LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV84eHVIVnRtTjMiLCJleHAiOjE2MzI2Njg4NDgsImlhdCI6MTYzMjY2NTI0OCwianRpIjoiOWQwOGU2ZmYtNWJhNi00YTYzLWE4MjUtZDgwYTQzZTU1NWRjIiwiY2xpZW50X2lkIjoiNW91Y200c2o5dTFqZGhiZDVpNnNsMGxtb2YiLCJ1c2VybmFtZSI6IjllY2U5MzExLTA1NTgtNDNhNS1iNDRhLTYzYzEwOTc0Njk3MCJ9.epileANKXyUJ1scd34625JOQkWCKvKvQ03g88zCRRR-TE-l30RnJDRdlxVkAU58kG9sjONdSmpctmFoxAHVpd0KsAIM2YcRv-mYo4oiI4AWwvuc_fLQ6H_8bypyT6jP111aAAWo5-HUnYhXkn4oKSgmY9EgHLOadWFOIOuLYv47Ut1pa6DcyYFnZJyyYG6AsTkgf2xdXH0pP7HsIThEJhT467_vHyrZa6z3_DCEFKdvpmcKL1wpyL-qirfgsdAyIJSKaMsV_bPo9onS8ISUn3VEXKXEFlqdFAkwDI6Mub2vxzkiT9rs12y1pqM7Hig9ts0Py-mDCEKbMR8boeSYKWw';
+    // const accessToken = req.headers.authorization;
+    const accessToken = 'eyJraWQiOiJWREI1STJ3VExKaklcL2N6T2FmUmp4M1wvbXVYYTl1UFJZNDZySEVzOENBZ3M9IiwiYWxnIjoiUlMyNTYifQ.eyJvcmlnaW5fanRpIjoiNmVlMzBhZjUtZDBhOC00NzU5LWI2NTctY2ExMzIxN2Y5NTdlIiwic3ViIjoiOWVjZTkzMTEtMDU1OC00M2E1LWI0NGEtNjNjMTA5NzQ2OTcwIiwiZXZlbnRfaWQiOiI5MTA4ZmRkYi00YjBkLTQzZTgtYTNiMC1mNThmMTFkNzc1ODIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjM0NDg5NjE0LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV84eHVIVnRtTjMiLCJleHAiOjE2MzQ1NzAxMjQsImlhdCI6MTYzNDU2NjUyNCwianRpIjoiYzk1OTA2NTAtYjk2YS00MmE1LTgwMTQtMDU3MDY5Y2EyMWU4IiwiY2xpZW50X2lkIjoiNW91Y200c2o5dTFqZGhiZDVpNnNsMGxtb2YiLCJ1c2VybmFtZSI6IjllY2U5MzExLTA1NTgtNDNhNS1iNDRhLTYzYzEwOTc0Njk3MCJ9.RrLOlkIKwxYi-jJGD6Wwg9WDw6ndaibeFSuAa5oU9onqd8JjP9-Q1QZnOQo3m9IGJyMyGnfsunufnuafKpw9cBwNq4kjujLREW8gBxJlvNYdtYr4pIxu_ivFN-SjRH_WaYezoJ2LBcskEdcHsabHO6Px8ovPpnkydknHrCN0-XrsvIBFZtXLCqLApU5CSoaBezVlfqMpi80k_dZU3ayQA56XqT7Kv1MQ_Sq6uFaLQP3xqtVHX2TCPllphrUry4mEenJVsk6koIO8_NoydyD1rfJhdgREfyuUvu690Ron8QyNeiQh5mOSPUhcwsq2556wlu91MyKY0quJaZt22NJL7g';
     if (!accessToken) return res.status(401).send('Access token not present');
 
     cognitoExpress.validate(accessToken, async function (err: unknown, response: Record<any, any>) {

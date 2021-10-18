@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Field, ID, ObjectType } from 'type-graphql';
 import AccountPermission from './AccountPermission';
+import AreasOfPractice from './AreasOfPractice';
 import User from './User';
 
 export interface IAccount {
@@ -9,6 +10,7 @@ export interface IAccount {
     createdBy: User,
     users: User[],
     permissions: AccountPermission[],
+    areasOfPractice: AreasOfPractice[],
 }
 
 @ObjectType()
@@ -30,6 +32,9 @@ class Account implements IAccount {
 
     @Field((_type) => String)
     createdDate!: string;
+
+    @Field((_type) => [AreasOfPractice])
+    areasOfPractice!: AreasOfPractice[]
 }
 
 export default Account;
