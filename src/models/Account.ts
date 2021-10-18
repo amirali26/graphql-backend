@@ -10,7 +10,7 @@ export interface IAccount {
     createdBy: User,
     users: User[],
     permissions: AccountPermission[],
-    areasOfPractice: AreasOfPractice[],
+    areasOfPractices: AreasOfPractice[],
 }
 
 @ObjectType()
@@ -34,7 +34,7 @@ class Account implements IAccount {
     createdDate!: string;
 
     @Field((_type) => [AreasOfPractice])
-    areasOfPractice!: AreasOfPractice[]
+    areasOfPractices!: AreasOfPractice[]
 }
 
 export default Account;

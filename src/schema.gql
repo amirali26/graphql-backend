@@ -4,7 +4,7 @@
 # -----------------------------------------------
 
 type Account {
-  areasOfPractice: [AreasOfPractice!]!
+  areasOfPractices: [AreasOfPractice!]!
   createdBy: User!
   createdDate: String!
   id: ID!
@@ -19,7 +19,7 @@ type AccountPermission {
 }
 
 input AddAccountInput {
-  areasOfPractices: [String!]!
+  areasOfPracticeIds: [String!]!
   name: ID!
   permissionIds: [String!]
   receiveEmails: Boolean!

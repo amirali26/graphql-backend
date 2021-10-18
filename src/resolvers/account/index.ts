@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import { Arg, Args, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import AddAccountInput from '../../inputs/account';
 import Account from '../../models/Account';
+import AreasOfPractice from '../../models/AreasOfPractice';
 import AccountService from '../../services/account';
 import AccountPermissionService from '../../services/account-permissions';
 import AreasOfPracticeService from '../../services/areas-of-practice';
@@ -27,6 +28,11 @@ class AccountResolver {
         } catch (e: any) {
             throw Error(e.message);
         }
+    }
+
+    @FieldResolver()
+    async areasOfPractices(@Root() account: Account) {
+        return Promise.all(account.areasOfPractices.map(aop => AreasOfPracticeService.getArea(aop as unknown as string)));
     }
 
     @FieldResolver()
@@ -66,21 +72,18 @@ class AccountResolver {
     @Mutation((returns) => Account)
     async addAccount(@Arg('account') newAccount: AddAccountInput, @Ctx() ctx: any) {
         try {
-            console.log(newAccount);
             const result = await AccountService.addAccount(
                 newAccount.name,
                 ctx.subId, newAccount.permissionIds || [],
                 newAccount.receiveEmails,
-                newAccount.areasOfPractices
+                newAccount.areasOfPracticeIds
             );
 
             UserAccountService.addNewUserAccount(ctx.subId, result.id);
-            Promise.all(newAccount.areasOfPractices.map((id) => AreasOfPracticeService.getArea(id)));
+            Promise.all(newAccount.areasOfPracticeIds.map((id) => AreasOfPracticeService.getArea(id)));
             if (newAccount.usersIds?.length) {
                 Promise.all(newAccount.usersIds.map((uid) => UserAccountService.addNewUserAccount(uid, result.id)));
             }
-
-            console.log(result.createdDate);
 
             return {
                 id: result.id,
